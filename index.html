@@ -2,8 +2,8 @@
 <html>
 	</head>
 		<title>Basic Incremental Game</title>
-		<link rel="stylesheet" type="text/css" href="/css/Incremental.css">
-		<script src="/js/Incremental.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/Incremental.css">
+		<script src="js/Incremental.js"></script>
 	</head>
 	
 	<body>
@@ -13,18 +13,27 @@
 				<div id="save-button">
 					<input type="button" value="Save" onclick="SaveGame();">
 				</div>
+				<div id="reset-button">
+					<input type="button" value="Reset" onclick="ResetGame(), SaveGame();">
+				</div>
 			</div>
 			<div id="content">
 				<div id="stats" class="block">
 					<div class="label">
-						Money
+						Stone
 					</div>
-					<div id="money" class="label">
+					<div id="stone" class="label">
+						0
+					</div>
+					<div id="copper-name" class="label">
+						Copper
+					</div>
+					<div id="copper" class="label">
 						0
 					</div>
 				</div>
 				<div id="clickables" class="block">
-					<input type="button" value="Click Me!" onclick="GatherMoney();">
+					<input type="button" value="Gather Stone" onclick="GatherStone();">
 				</div>
 				<div id="buildings" class="block">
 					<div id="Building1">

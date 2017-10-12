@@ -22,6 +22,11 @@
 	margin-left: 94%;
 	margin-top: -70px;
 }
+#reset-button {
+	margin-right: 15%;
+	margin-left: 84%;
+	margin-top: -24px;
+}
 
 .block {
 	border-style: solid;
