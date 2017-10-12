@@ -16,15 +16,21 @@ function GatherStone() {
 // Handles what happens every time the timer hits 1 sec
 function Tick() {
 	for (var i = 0; i < game.buildings.length; i++) {
-		game.stone += game.buildings[i] * buildings[i].persec;
+		if (buildings[i].resource == "Stone") {
+			game.stone += game.buildings[i] * buildings[i].persec;
+		} else if (buildings[i].resource == "Ore") {
+			game.ore += game.buildings[i] * buildings[i].persec;
+		}
 	}
 	
 	document.getElementById("stone").innerHTML = game.stone;
+	document.getElementById("ore").innerHTML = game.ore;
 }
 
 // Saving
 function GameSave() {
 	this.stone = 0;
+	this.ore = 0;
 	this.buildings = [];
 	
 	for (var i = 0; i < buildings.length; i++) {
@@ -38,24 +44,33 @@ function SaveGame() {
 
 function LoadGame() {
 	game.stone = JSON.parse(window.localStorage["SaveName"]).stone;
+	game.ore = JSON.parse(window.localStorage["SaveName"]).ore;
 	game.buildings = JSON.parse(window.localStorage["SaveName"]).buildings;
 	
-	if (game.buildings[0] == 0) {
-		document.getElementById("copper-name").style.display = "none";
-		document.getElementById("copper").style.display = "none";
-	}
+	/*if (game.buildings[0] == 0) {
+		document.getElementById("ore-name").style.display = "none";
+		document.getElementById("ore").style.display = "none";
+	}*/
 	
 	document.getElementById("stone").innerHTML = game.stone;
+	document.getElementById("ore").innerHTML = game.ore;
 	document.getElementById("Building1Qty").innerHTML = game.buildings[0];
+	document.getElementById("Building2Qty").innerHTML = game.buildings[1];
 }
 
 function ResetGame() {
 	game.stone = 0;
+	game.ore = 0;
 	game.buildings = []
 	
 	for (var i  = 0; i < buildings.length; i++) {
 		game.buildings[i] = 0;
 	}
+	
+	document.getElementById("stone").innerHTML = game.stone;
+	document.getElementById("ore").innerHTML = game.ore;
+	document.getElementById("Building1Qty").innerHTML = game.buildings[0];
+	document.getElementById("Building2Qty").innerHTML = game.buildings[1];
 }
 
 // Building class
@@ -63,18 +78,21 @@ function Building() {
 	this.name = "Building Name";
 	this.cost = 10;
 	this.persec = 1;
+	this.resource = "";
 }
 
 function InitBuildings() {
-	LoadBuilding("Copper Mine", 10, 1);
+	LoadBuilding("Quarry", 10, 1, "Stone");
+	LoadBuilding("Ore Mine", 50, 1, "Ore");
 }
 
-function LoadBuilding(name, cost, persec) {
+function LoadBuilding(name, cost, persec, resource) {
 	var cur = buildings.length;
 	buildings[cur] = new Building();
 	buildings[cur].name = name;
 	buildings[cur].cost = cost;
 	buildings[cur].persec = persec;
+	buildings[cur].resource = resource;
 }
 
 function Build(id) {
@@ -82,13 +100,14 @@ function Build(id) {
 		game.stone -= buildings[id].cost;
 		game.buildings[id]++;
 		
-		if (game.buildings[id] >= 0) {
-			document.getElementById("copper-name").display = "inline-block";
-			document.getElementById("copper").display = "inline-block";
-		}
+		/*if (game.buildings[id] >= 0) {
+			document.getElementById("ore").display = "inline-block";
+			document.getElementById("ore").display = "inline-block";
+		}*/
 		
-		document.getElementById("stone").innerHTML = game.stone;
-		document.getElementById("Building1Qty").innerHTML = game.buildings[id];
+		document.getElementById("ore").innerHTML = game.ore;
+		document.getElementById("Building1Qty").innerHTML = game.buildings[0];
+		document.getElementById("Building2Qty").innerHTML = game.buildings[1];
 	}
 }
 
@@ -101,7 +120,4 @@ window.onload = function() {
 	}
 	
 	LoadGame();
-	
-	//document.getElementById("stone").innerHTML = GameTwo.stone;
-	//document.getElementById("Building1Qty").innerHTML = GameTwo.buildings[0];
 }
