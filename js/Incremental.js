@@ -105,6 +105,7 @@ function Build(id) {
 			document.getElementById("ore").display = "inline-block";
 		}*/
 		
+		document.getElementById("stone").innerHTML = game.stone;
 		document.getElementById("ore").innerHTML = game.ore;
 		document.getElementById("Building1Qty").innerHTML = game.buildings[0];
 		document.getElementById("Building2Qty").innerHTML = game.buildings[1];

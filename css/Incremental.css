@@ -18,14 +18,14 @@
 	margin-top: 50px;
 }
 #save-button {
-	margin-right: 5%;
-	margin-left: 94%;
+	margin-right: 15%;
+	margin-left: 90%;
 	margin-top: -70px;
 }
 #reset-button {
-	margin-right: 15%;
-	margin-left: 84%;
-	margin-top: -24px;
+	margin-right: 25%;
+	margin-left: 80%;
+	margin-top: -33px;
 }
 
 .block {
@@ -53,13 +53,20 @@
 }
 
 .button {
-	background-color: white;
-	border-style: solid;
-	border-width: 1px;
-	border-color:#333333;
-	padding: 15px 32px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
+	background-color:#ffffff;
+	border:3px solid #333333;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Times New Roman;
+	font-size:15px;
+	padding:4px 24px;
+	text-decoration:none;
+}
+.button:hover {
+	background-color:#aaaaaa;
+}
+.button:active {
+	position:relative;
+	top:1px;
 }

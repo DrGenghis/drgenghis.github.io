@@ -10,11 +10,11 @@
 		<div id="page">
 			<div id="header">
 				<div id="game-title">Basic Incremental Game</div>
-				<div id="save-button" class="button">
-					<input type="button" value="Save" onclick="SaveGame();">
+				<div id="save-button">
+					<input type="button" value="Save" onclick="SaveGame();" class="button">
 				</div>
 				<div id="reset-button">
-					<input type="button" value="Reset" onclick="ResetGame(), SaveGame();">
+					<input type="button" value="Reset" onclick="ResetGame(), SaveGame();" class="button">
 				</div>
 			</div>
 			<div id="content">
@@ -33,11 +33,11 @@
 					</div>
 				</div>
 				<div id="clickables" class="block">
-					<input type="button" value="Gather Stone" onclick="GatherStone();">
+					<input type="button" value="Gather Stone" onclick="GatherStone();" class="button">
 				</div>
 				<div id="buildings" class="block">
 					<div id="Building1">
-						<input type="button" value="Quarry" onclick="Build(0);">
+						<input type="button" value="Quarry" onclick="Build(0);" class="button">
 					</div>
 					<div class="label">
 						Cost:
@@ -58,9 +58,9 @@
 						0
 					</div>
 				
-					<div id="Building2" class="tooltip">
-						<input type="button" value="Ore Mine" onclick="Build(1);">
-							<span class="tooltiptext">Ore Mine</span>
+					<div id="Building2">
+						<input type="button" value="Ore Mine" onclick="Build(1);" class="button">
+							<span class="tooltiptext"></span>
 						</input>
 					</div>
 					<div class="label">
