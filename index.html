@@ -10,7 +10,7 @@
 		<div id="page">
 			<div id="header">
 				<div id="game-title">Basic Incremental Game</div>
-				<div id="save-button">
+				<div id="save-button" class="button">
 					<input type="button" value="Save" onclick="SaveGame();">
 				</div>
 				<div id="reset-button">
@@ -58,8 +58,10 @@
 						0
 					</div>
 				
-					<div id="Building2">
+					<div id="Building2" class="tooltip">
 						<input type="button" value="Ore Mine" onclick="Build(1);">
+							<span class="tooltiptext">Ore Mine</span>
+						</input>
 					</div>
 					<div class="label">
 						Cost:
@@ -85,3 +87,27 @@
 		</div>
 	</body>
 </html>
+
+<style>
+	.tooltip {
+		position: relative;
+		display: inline-block;
+	}
+	
+	.tooltip .tooltiptext {
+		visibility: hidden;
+		width: 120px;
+		background-color: black;
+		color:#fff;
+		text-align: center;
+		padding: 5px 0;
+		border-radius: 6px;
+		
+		position: absolute;
+		z-index: 1;
+	}
+	
+	.tooltip:hover .tooltiptext {
+		visibility: visible;
+	}
+</style>
