@@ -1,10 +1,14 @@
 // Timer for building ticks
 var Timer = window.setInterval(function(){Tick()}, 1000);
 
+var ToolTipTimer = window.setInterval(function() {BuildingCostTT(0)}, 500);
+
 // Auto-save timer
 var ASTimer = window.setInterval(function(){SaveGame()}, 10000);
 
 var buildings = [];
+
+var buildingModifier = 1.5;
 
 // Button to click for stone
 function GatherStone() {
@@ -25,6 +29,59 @@ function Tick() {
 	
 	document.getElementById("stone").innerHTML = game.stone;
 	document.getElementById("ore").innerHTML = game.ore;
+}
+
+// Takes the string for the cost of a building and splits it up into individual values.
+// (e.g. "105 stone 200 metal 5 cogs" -> [105], ["stone"], [200], ["metal"], [5], ["cogs"])
+function CostStringSplit(id) {
+	var costSplit = [];
+	var costString = buildings[id].desc;
+	
+	// Splits the costString up into the individual values
+	costSplit = costString.split(" ");
+	
+	// Takes the split values and turns every other one from a string to an int. (e.g. "105" -> 105)
+	for (var i = 0; i < costSplit.length; i += 2) {
+		costSplit[i] = parseInt(costSplit[i]);
+	}
+	
+	return costSplit;	// Returns the split cost of the materials
+}
+
+// Goes through the list of variables that have been sliced up by CostStringSplit()
+// and modifies them based on how many buildings you own of that type
+function CostMultiplier(costList, id) {
+	var newSplit = [];
+	
+	// Goes through the list of elements and updates the costs based on the amount of that building you own
+	for (var i = 0;i < costList.length; i += 2) {
+		newSplit.push(costList[i] * (buildingModifier^buildings[id]));
+		newSplit.push(costList[i+1]);
+	}
+	
+	// Returns the new set of costs after modifying their costs
+	return newSplit;
+}
+
+function BuildingCostCheck(costList, id) {
+	
+}
+
+function BuildingCostTT(id) {
+	var toolTip = buildings[id].desc + '<font size="2">';
+	var costList = CostStringSplit(buildings[id]);
+	
+	for (var i = 0; i < costList.length; i++) {
+		toolTip = toolTip + costList[i] + " ";
+	}
+	
+	toolTip += "</font>";
+	
+	if (id == 0) {
+		document.getElementById("Building1TT").innerHTML = toolTip;
+	} else if (id == 1) {
+		document.getElementById("Building2TT").innerHTML = toolTip;
+	}
 }
 
 // Saving
@@ -76,23 +133,25 @@ function ResetGame() {
 // Building class
 function Building() {
 	this.name = "Building Name";
-	this.cost = 10;
+	this.cost = "10 stone";
 	this.persec = 1;
 	this.resource = "";
+	this.desc = "";
 }
 
 function InitBuildings() {
-	LoadBuilding("Quarry", 10, 1, "Stone");
-	LoadBuilding("Ore Mine", 50, 1, "Ore");
+	LoadBuilding("Quarry", "10 stone", 1, "stone", "A large quarry designed to output a great deal of stone. <br />");
+	LoadBuilding("Ore Mine", "50 stone", 1, "ore", "Outputs ore which can later be smelted down into metals. <br />");
 }
 
-function LoadBuilding(name, cost, persec, resource) {
+function LoadBuilding(name, cost, persec, resource, desc) {
 	var cur = buildings.length;
 	buildings[cur] = new Building();
 	buildings[cur].name = name;
 	buildings[cur].cost = cost;
 	buildings[cur].persec = persec;
 	buildings[cur].resource = resource;
+	buildings[cur].desc = desc;
 }
 
 function Build(id) {
