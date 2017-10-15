@@ -14,7 +14,7 @@ var buildingModifier = 1.15;
 function GatherStone() {
 	game.stone++;
 	
-	document.getElementById("stone").innerHTML = game.stone;
+	UpdateResources();
 }
 
 // Handles what happens every time the timer hits 1 sec
