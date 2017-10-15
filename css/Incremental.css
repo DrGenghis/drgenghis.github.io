@@ -18,9 +18,14 @@
 	margin-top: 50px;
 }
 #save-button {
-	margin-right: 5%;
-	margin-left: 94%;
+	margin-right: 15%;
+	margin-left: 90%;
 	margin-top: -70px;
+}
+#reset-button {
+	margin-right: 25%;
+	margin-left: 80%;
+	margin-top: -33px;
 }
 
 .block {
@@ -45,4 +50,23 @@
 	width: 48%;
 	
 	padding: 2px;
+}
+
+.button {
+	background-color:#ffffff;
+	border:3px solid #333333;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Times New Roman;
+	font-size:15px;
+	padding:4px 24px;
+	text-decoration:none;
+}
+.button:hover {
+	background-color:#aaaaaa;
+}
+.button:active {
+	position:relative;
+	top:1px;
 }

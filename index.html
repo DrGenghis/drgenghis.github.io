@@ -11,24 +11,34 @@
 			<div id="header">
 				<div id="game-title">Basic Incremental Game</div>
 				<div id="save-button">
-					<input type="button" value="Save" onclick="SaveGame();">
+					<input type="button" value="Save" onclick="SaveGame();" class="button">
+				</div>
+				<div id="reset-button">
+					<input type="button" value="Reset" onclick="ResetGame(), SaveGame();" class="button">
 				</div>
 			</div>
 			<div id="content">
 				<div id="stats" class="block">
 					<div class="label">
-						Money
+						Stone
 					</div>
-					<div id="money" class="label">
+					<div id="stone" class="label">
+						0
+					</div>
+					<div id="ore-name" class="label">
+						Ore
+					</div>
+					<div id="ore" class="label">
 						0
 					</div>
 				</div>
 				<div id="clickables" class="block">
-					<input type="button" value="Click Me!" onclick="GatherMoney();">
+					<input type="button" value="Gather Stone" onclick="GatherStone();" class="button">
 				</div>
 				<div id="buildings" class="block">
-					<div id="Building1">
-						<input type="button" value="Copper Mine" onclick="Build(0);">
+					<div id="Building1" class="tooltip">
+						<input type="button" value="Quarry" onclick="Build(0);" class="button">
+						<div id="Building1TT" class="tooltiptext"></div>
 					</div>
 					<div class="label">
 						Cost:
@@ -38,7 +48,7 @@
 					</div>
 					<div class="label">
 						$/Sec:
-					</div> 
+					</div>
 					<div id="Building1PerSec" class="label">
 						1
 					</div>
@@ -48,9 +58,59 @@
 					<div id="Building1Qty" class="label">
 						0
 					</div>
+				
+					<div id="Building2" class="tooltip">
+						<input type="button" value="Ore Mine" onclick="Build(1);" class="button">
+							<div id="Building2TT" class="tooltiptext"></div>
+						</input>
+					</div>
+					<div class="label">
+						Cost:
+					</div>
+					<div id="Building2Cost" class="label">
+						50
+					</div>
+					<div class="label">
+						$/Sec:
+					</div> 
+					<div id="Building2PerSec" class="label">
+						1
+					</div>
+					<div class="label">
+						Qty:
+					</div>
+					<div id="Building2Qty" class="label">
+						0
+					</div>
 				</div>
 				<div id="upgrades" class="block">Upgrades</div>
 			</div>
 		</div>
 	</body>
 </html>
+
+<style>
+	.tooltip {
+		position: relative;
+	}
+	
+	.tooltip .tooltiptext {
+		visibility: hidden;
+		width: 240px;
+		top: 100%;
+		left: 50%;
+		margin-left: -120px;
+		background-color: black;
+		color:#fff;
+		text-align: center;
+		padding: 5px 0;
+		border-radius: 6px;
+		
+		position: absolute;
+		z-index: 1;
+	}
+	
+	.tooltip:hover .tooltiptext {
+		visibility: visible;
+	}
+</style>
