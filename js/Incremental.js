@@ -68,8 +68,10 @@ function BuildingCostCheck(costList, id) {
 }
 
 function BuildingCostTT(id) {
-	var toolTip = buildings[id].desc + '<font size="2">';
-	var costList = CostStringSplit(buildings[id]);
+	var toolTip = buildings[id].desc;
+	var costList = buildings[id].cost;
+	toolTip = toolTip + '<font size="2">';
+	//var costList = CostStringSplit(buildings[id].cost);
 	
 	for (var i = 0; i < costList.length; i++) {
 		toolTip = toolTip + costList[i] + " ";
@@ -142,16 +144,19 @@ function Building() {
 function InitBuildings() {
 	LoadBuilding("Quarry", "10 stone", 1, "stone", "A large quarry designed to output a great deal of stone. <br />");
 	LoadBuilding("Ore Mine", "50 stone", 1, "ore", "Outputs ore which can later be smelted down into metals. <br />");
+	
+	console.log("Buildings Initialized");
 }
 
 function LoadBuilding(name, cost, persec, resource, desc) {
 	var cur = buildings.length;
-	buildings[cur] = new Building();
-	buildings[cur].name = name;
-	buildings[cur].cost = cost;
-	buildings[cur].persec = persec;
-	buildings[cur].resource = resource;
-	buildings[cur].desc = desc;
+	buildings[cur] = new Building(name, cost, persec, resource, desc);
+	console.log(buildings[cur]);
+	//buildings[cur].name = name;
+	//buildings[cur].cost = cost;
+	//buildings[cur].persec = persec;
+	//buildings[cur].resource = resource;
+	//buildings[cur].desc = desc;
 }
 
 function Build(id) {
@@ -175,9 +180,6 @@ function Build(id) {
 window.onload = function() {
 	InitBuildings();
 	window.game = new GameSave();
-	if (window.localStorage["SaveName"] == null) {
-		GameSave();
-	}
 	
 	LoadGame();
 }
