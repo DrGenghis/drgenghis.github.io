@@ -1,7 +1,7 @@
 // Timer for building ticks
 var Timer = window.setInterval(function(){Tick()}, 1000);
 
-var ToolTipTimer = window.setInterval(function() {BuildingCostTT(0)}, 500);
+var ToolTipTimer = window.setInterval(function() {BuildingTT(0), BuildingTT(1)}, 500);
 
 // Auto-save timer
 var ASTimer = window.setInterval(function(){SaveGame()}, 10000);
@@ -67,15 +67,17 @@ function BuildingCostCheck(costList, id) {
 	
 }
 
-function BuildingCostTT(id) {
+function BuildingTT(id) {
 	var toolTip = buildings[id].desc;
 	var costList = buildings[id].cost;
-	toolTip = toolTip + '<font size="2">';
+	toolTip = toolTip + '<font size="1">';
 	//var costList = CostStringSplit(buildings[id].cost);
 	
 	for (var i = 0; i < costList.length; i++) {
 		toolTip = toolTip + costList[i] + " ";
 	}
+	
+	toolTip += "    " + buildings[id].resource + " Per Sec:  " + buildings[id].persec;
 	
 	toolTip += "</font>";
 	
@@ -142,21 +144,21 @@ function Building() {
 }
 
 function InitBuildings() {
-	LoadBuilding("Quarry", "10 stone", 1, "stone", "A large quarry designed to output a great deal of stone. <br />");
-	LoadBuilding("Ore Mine", "50 stone", 1, "ore", "Outputs ore which can later be smelted down into metals. <br />");
+	LoadBuilding("Quarry", "10 stone", .5, "stone", "A large quarry designed to output a great deal of stone. <hr>");
+	LoadBuilding("Ore Mine", "50 stone", .2, "ore", "Outputs ore which can later be smelted down into metals. <hr>");
 	
 	console.log("Buildings Initialized");
 }
 
 function LoadBuilding(name, cost, persec, resource, desc) {
 	var cur = buildings.length;
-	buildings[cur] = new Building(name, cost, persec, resource, desc);
+	buildings[cur] = new Building();
+	buildings[cur].name = name;
+	buildings[cur].cost = cost;
+	buildings[cur].persec = persec;
+	buildings[cur].resource = resource;
+	buildings[cur].desc = desc;
 	console.log(buildings[cur]);
-	//buildings[cur].name = name;
-	//buildings[cur].cost = cost;
-	//buildings[cur].persec = persec;
-	//buildings[cur].resource = resource;
-	//buildings[cur].desc = desc;
 }
 
 function Build(id) {
