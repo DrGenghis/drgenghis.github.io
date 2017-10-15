@@ -8,7 +8,7 @@ var ASTimer = window.setInterval(function(){SaveGame()}, 10000);
 
 var buildings = [];
 
-var buildingModifier = 1.5;
+var buildingModifier = 1.15;
 
 // Button to click for stone
 function GatherStone() {
@@ -20,22 +20,21 @@ function GatherStone() {
 // Handles what happens every time the timer hits 1 sec
 function Tick() {
 	for (var i = 0; i < game.buildings.length; i++) {
-		if (buildings[i].resource == "Stone") {
+		if (buildings[i].resource == "stone") {
 			game.stone += game.buildings[i] * buildings[i].persec;
-		} else if (buildings[i].resource == "Ore") {
+		} else if (buildings[i].resource == "ore") {
 			game.ore += game.buildings[i] * buildings[i].persec;
 		}
 	}
 	
-	document.getElementById("stone").innerHTML = game.stone;
-	document.getElementById("ore").innerHTML = game.ore;
+	UpdateResources();
 }
 
 // Takes the string for the cost of a building and splits it up into individual values.
 // (e.g. "105 stone 200 metal 5 cogs" -> [105], ["stone"], [200], ["metal"], [5], ["cogs"])
 function CostStringSplit(id) {
 	var costSplit = [];
-	var costString = buildings[id].desc;
+	var costString = buildings[id].cost;
 	
 	// Splits the costString up into the individual values
 	costSplit = costString.split(" ");
@@ -55,29 +54,59 @@ function CostMultiplier(costList, id) {
 	
 	// Goes through the list of elements and updates the costs based on the amount of that building you own
 	for (var i = 0;i < costList.length; i += 2) {
-		newSplit.push(costList[i] * (buildingModifier^buildings[id]));
+		//newSplit.push(costList[i] * (buildingModifier^buildings[id]));
+		newSplit.push(costList[i] * (Math.pow(buildingModifier, game.buildings[id])));
+		newSplit[i] = parseFloat(newSplit[i]).toFixed(2);
 		newSplit.push(costList[i+1]);
 	}
+	
+	console.log("newSplit: " + newSplit);
 	
 	// Returns the new set of costs after modifying their costs
 	return newSplit;
 }
 
+// Checks to make sure you have enough resources to build the thing you're trying to build
+// FIXME: This doesn't figure out the individual parts correctly, it only figures out
+//			if you can the WHOLE thing. I want it to be able to tell you if you have each
+//			part individually.
 function BuildingCostCheck(costList, id) {
+	var resCheck = 0;
 	
+	for (var i = 0; i < costList.length; i += 2) {
+		if (costList[i + 1] == "stone") {
+			if (game.stone >= costList[i]) {
+				resCheck++;
+			}
+		} else if (costList[i + 1] == "ore") {
+			if (game.ore >= costList[i]) {
+				resCheck++;
+			}
+		}
+	}
+	
+	if (resCheck == (costList.length / 2) && costList.length > 1) {
+		return true;
+	} else if (resCheck == costList) {
+		console.log("What are you doing here?");
+	}else {
+		console.log("resCheck: " + resCheck);
+		return false;
+	}
 }
 
 function BuildingTT(id) {
 	var toolTip = buildings[id].desc;
-	var costList = buildings[id].cost;
+	var costList = CostStringSplit(id);
+	var adjCostList = CostMultiplier(costList, id);
 	toolTip = toolTip + '<font size="1">';
 	//var costList = CostStringSplit(buildings[id].cost);
 	
-	for (var i = 0; i < costList.length; i++) {
-		toolTip = toolTip + costList[i] + " ";
+	for (var i = 0; i < adjCostList.length; i++) {
+		toolTip = toolTip + adjCostList[i] + " ";
 	}
 	
-	toolTip += "    " + buildings[id].resource + " Per Sec:  " + buildings[id].persec;
+	toolTip += "&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;" + buildings[id].resource + " Per Sec:  " + buildings[id].persec;
 	
 	toolTip += "</font>";
 	
@@ -113,10 +142,7 @@ function LoadGame() {
 		document.getElementById("ore").style.display = "none";
 	}*/
 	
-	document.getElementById("stone").innerHTML = game.stone;
-	document.getElementById("ore").innerHTML = game.ore;
-	document.getElementById("Building1Qty").innerHTML = game.buildings[0];
-	document.getElementById("Building2Qty").innerHTML = game.buildings[1];
+	UpdateResources();
 }
 
 function ResetGame() {
@@ -128,10 +154,7 @@ function ResetGame() {
 		game.buildings[i] = 0;
 	}
 	
-	document.getElementById("stone").innerHTML = game.stone;
-	document.getElementById("ore").innerHTML = game.ore;
-	document.getElementById("Building1Qty").innerHTML = game.buildings[0];
-	document.getElementById("Building2Qty").innerHTML = game.buildings[1];
+	UpdateResources();
 }
 
 // Building class
@@ -146,8 +169,6 @@ function Building() {
 function InitBuildings() {
 	LoadBuilding("Quarry", "10 stone", .5, "stone", "A large quarry designed to output a great deal of stone. <hr>");
 	LoadBuilding("Ore Mine", "50 stone", .2, "ore", "Outputs ore which can later be smelted down into metals. <hr>");
-	
-	console.log("Buildings Initialized");
 }
 
 function LoadBuilding(name, cost, persec, resource, desc) {
@@ -158,24 +179,33 @@ function LoadBuilding(name, cost, persec, resource, desc) {
 	buildings[cur].persec = persec;
 	buildings[cur].resource = resource;
 	buildings[cur].desc = desc;
-	console.log(buildings[cur]);
 }
 
 function Build(id) {
-	if (game.stone >= buildings[id].cost) {
-		game.stone -= buildings[id].cost;
+	var costList = CostStringSplit(id);
+	var adjCostList = CostMultiplier(costList, id);
+	
+	if (BuildingCostCheck(adjCostList, id == true)) {
+		for (var i = 0; i < adjCostList.length; i += 2) {
+			if (adjCostList[i + 1] == "stone") {
+				game.stone -= adjCostList[i];
+			}
+			if (adjCostList[i + 1] == "ore") {
+				game.ore -= adjCostList[i];
+			}
+		}
+		
 		game.buildings[id]++;
 		
-		/*if (game.buildings[id] >= 0) {
-			document.getElementById("ore").display = "inline-block";
-			document.getElementById("ore").display = "inline-block";
-		}*/
-		
-		document.getElementById("stone").innerHTML = game.stone;
-		document.getElementById("ore").innerHTML = game.ore;
-		document.getElementById("Building1Qty").innerHTML = game.buildings[0];
-		document.getElementById("Building2Qty").innerHTML = game.buildings[1];
+		UpdateResources();
 	}
+}
+
+function UpdateResources() {
+	document.getElementById("stone").innerHTML = game.stone.toFixed(2);
+	document.getElementById("ore").innerHTML = game.ore.toFixed(2);
+	document.getElementById("Building1Qty").innerHTML = game.buildings[0];
+	document.getElementById("Building2Qty").innerHTML = game.buildings[1];
 }
 
 // Sets up the game file
