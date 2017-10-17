@@ -2,8 +2,8 @@
 <html>
 	</head>
 		<title>Basic Incremental Game</title>
-		<link rel="stylesheet" type="text/css" href="/css/Incremental.css">
-		<script src="/js/Incremental.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/Incremental.css">
+		<script src="js/Incremental.js"></script>
 	</head>
 	
 	<body>
@@ -11,10 +11,10 @@
 			<div id="header">
 				<div id="game-title">Basic Incremental Game</div>
 				<div id="save-button">
-					<input type="button" value="Save" onclick="SaveGame();" class="button">
+					<input type="button" id="save" value="Save" onclick="SaveGame();" class="button">
 				</div>
 				<div id="reset-button">
-					<input type="button" value="Reset" onclick="ResetGame(), SaveGame();" class="button">
+					<input type="button" id="reset" value="Reset" onclick="ResetGame(), SaveGame();" class="button">
 				</div>
 			</div>
 			<div id="content">
@@ -36,52 +36,40 @@
 					<input type="button" value="Gather Stone" onclick="GatherStone();" class="button">
 				</div>
 				<div id="buildings" class="block">
-					<div id="Building1" class="tooltip">
-						<input type="button" value="Quarry" onclick="Build(0);" class="button">
-						<div id="Building1TT" class="tooltiptext"></div>
-					</div>
-					<div class="label">
-						Cost:
-					</div>
-					<div id="Building1Cost" class="label">
-						10
-					</div>
-					<div class="label">
-						$/Sec:
-					</div>
-					<div id="Building1PerSec" class="label">
-						1
-					</div>
-					<div class="label">
-						Qty:
-					</div>
-					<div id="Building1Qty" class="label">
-						0
-					</div>
-				
-					<div id="Building2" class="tooltip">
-						<input type="button" value="Ore Mine" onclick="Build(1);" class="button">
-							<div id="Building2TT" class="tooltiptext"></div>
-						</input>
-					</div>
-					<div class="label">
-						Cost:
-					</div>
-					<div id="Building2Cost" class="label">
-						50
-					</div>
-					<div class="label">
-						$/Sec:
-					</div> 
-					<div id="Building2PerSec" class="label">
-						1
-					</div>
-					<div class="label">
-						Qty:
-					</div>
-					<div id="Building2Qty" class="label">
-						0
-					</div>
+					<table cellpadding="0" cellspacing="0" style="width: 100%">
+						<tr>
+							<td style="vertical-align: top;">
+								<div id="Building1" class="tooltip">
+									<input type="button" value="Quarry" onclick="Build(0);" class="button">
+										<div id="Building1TT" class="tooltiptext"></div>
+									</input>
+								</div>
+							</td>
+							<td style="vertical-align: top;">
+								<div id="Building2" class="tooltip">
+									<input type="button" value="Ore Mine" onclick="Build(1);" class="button">
+										<div id="Building2TT" class="tooltiptext"></div>
+									</input>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: top;">
+								<div id="Building3" class="tooltip">
+									<input type="button" value="Ore Mine" onclick="Build(1);" class="button">
+										<div id="Building2TT" class="tooltiptext"></div>
+									</input>
+								</div>
+							</td>
+							<td style="vertical-align: top;">
+								<div id="Building4" class="tooltip">
+									<input type="button" value="Metallic Catalyzer" onclick="Build(1);" class="button">
+										<div id="Building2TT" class="tooltiptext"></div>
+									</input>
+								</div>
+							</td>
+						</tr>	
+					</table>
 				</div>
 				<div id="upgrades" class="block">Upgrades</div>
 			</div>
@@ -92,6 +80,9 @@
 <style>
 	.tooltip {
 		position: relative;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
 	}
 	
 	.tooltip .tooltiptext {
