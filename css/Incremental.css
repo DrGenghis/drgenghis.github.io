@@ -51,6 +51,14 @@
 	padding: 5px;
 }
 
+.column {
+    min-height: 100%;
+    height: 100%;
+
+    display: inline-block;
+    margin-top: 4px;
+}
+
 .building-block {
 	font-size: 15px;
 	font-weight: normal;

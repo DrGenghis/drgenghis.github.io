@@ -18,60 +18,66 @@
 				</div>
 			</div>
 			<div id="content">
-				<div id="stats" class="block">
-					<div class="label">
-						Stone
-					</div>
-					<div id="stone" class="label">
-						0
-					</div>
-					<div id="ore-name" class="label">
-						Ore
-					</div>
-					<div id="ore" class="label">
-						0
+				<div id="left-column" class="column" style="vertical-align: top; font-size: 16px;">
+					<div id="stats" class="block">
+						<div class="label">
+							Stone
+						</div>
+						<div id="stone" class="label">
+							0
+						</div>
+						<div id="ore-name" class="label">
+							Ore
+						</div>
+						<div id="ore" class="label">
+							0
+						</div>
 					</div>
 				</div>
-				<div id="clickables" class="block">
+				<!--<div id="clickables" class="block">
 					<input type="button" value="Gather Stone" onclick="GatherStone();" class="button">
+				</div>-->
+				<div id="middle-column" class="column">
+					<div id="buildings" class="block">
+						<table cellpadding="0" cellspacing="0" style="width: 100%">
+							<tr>
+								<td style="vertical-align: top;">
+									<div id="Building1" class="tooltip">
+										<input type="button" value="Quarry" onclick="Build(0);" class="button">
+											<div id="Building1TT" class="tooltiptext"></div>
+										</input>
+									</div>
+								</td>
+								<td style="vertical-align: top;">
+									<div id="Building2" class="tooltip">
+										<input type="button" value="Ore Mine" onclick="Build(1);" class="button">
+											<div id="Building2TT" class="tooltiptext"></div>
+										</input>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="vertical-align: top;">
+									<div id="Building3" class="tooltip">
+										<input type="button" value="Ore Mine" onclick="Build(1);" class="button">
+											<div id="Building2TT" class="tooltiptext"></div>
+										</input>
+									</div>
+								</td>
+								<td style="vertical-align: top;">
+									<div id="Building4" class="tooltip">
+										<input type="button" value="Metallic Catalyzer" onclick="Build(1);" class="button">
+											<div id="Building2TT" class="tooltiptext"></div>
+										</input>
+									</div>
+								</td>
+							</tr>	
+						</table>
+					</div>
 				</div>
-				<div id="buildings" class="block">
-					<table cellpadding="0" cellspacing="0" style="width: 100%">
-						<tr>
-							<td style="vertical-align: top;">
-								<div id="Building1" class="tooltip">
-									<input type="button" value="Quarry" onclick="Build(0);" class="button">
-										<div id="Building1TT" class="tooltiptext"></div>
-									</input>
-								</div>
-							</td>
-							<td style="vertical-align: top;">
-								<div id="Building2" class="tooltip">
-									<input type="button" value="Ore Mine" onclick="Build(1);" class="button">
-										<div id="Building2TT" class="tooltiptext"></div>
-									</input>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td style="vertical-align: top;">
-								<div id="Building3" class="tooltip">
-									<input type="button" value="Ore Mine" onclick="Build(1);" class="button">
-										<div id="Building2TT" class="tooltiptext"></div>
-									</input>
-								</div>
-							</td>
-							<td style="vertical-align: top;">
-								<div id="Building4" class="tooltip">
-									<input type="button" value="Metallic Catalyzer" onclick="Build(1);" class="button">
-										<div id="Building2TT" class="tooltiptext"></div>
-									</input>
-								</div>
-							</td>
-						</tr>	
-					</table>
+				<div id="right-column" class="column">
+					<div id="upgrades" class="block">Upgrades</div>
 				</div>
-				<div id="upgrades" class="block">Upgrades</div>
 			</div>
 		</div>
 	</body>
